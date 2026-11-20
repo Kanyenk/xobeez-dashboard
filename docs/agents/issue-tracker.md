@@ -1,6 +1,6 @@
 # Issue tracker: GitHub
 
-Issues and specs for this repo live as GitHub issues in `Kanyenk/xobeez-dashboard`. Use the `gh` CLI for all operations.
+Issues and specs for this repo live as GitHub issues in `Kanyenk/xobeez-dashboard`. See https://github.com/Kanyenk/xobeez-dashboard/issues Use the `gh` CLI for all operations.
 
 ## Conventions
 
@@ -16,7 +16,7 @@ Issues and specs for this repo live as GitHub issues in `Kanyenk/xobeez-dashboar
 
 Infer the repo from `git remote -v`; `gh` does this automatically when run inside a clone.
 
-File issues only into `Kanyenk/xobeez-dashboard`. Never file into `mattpocock/skills`.
+File issues only into `Kanyenk/xobeez-dashboard` (https://github.com/Kanyenk/xobeez-dashboard). Never file into `mattpocock/skills`.
 
 ## Pull requests as a triage surface
 
