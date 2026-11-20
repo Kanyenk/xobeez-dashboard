@@ -1,0 +1,16 @@
+[Unit]
+Description=Xobeez Backend API Server
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/projects/xobeez-backend
+ExecStart=/usr/bin/go run /home/ubuntu/projects/xobeez-backend/cmd/api/main.go
+Restart=always
+RestartSec=3
+Environment=PORT=8082
+Environment=DATABASE_URL=host=localhost port=15433 user=postgres password=postgres dbname=xobeez sslmode=disable
+
+[Install]
+WantedBy=multi-user.target

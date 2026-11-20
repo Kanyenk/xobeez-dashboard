@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: xobeez-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: xobeez
+    ports:
+      - "15433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: .
+    container_name: xobeez-backend
+    environment:
+      DATABASE_URL: "host=db user=postgres password=postgres dbname=xobeez sslmode=disable"
+    ports:
+      - "8082:8080"
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: go run cmd/api/main.go
+
+volumes:
+  postgres_data:

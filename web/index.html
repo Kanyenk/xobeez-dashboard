@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xobeez Admin - Test Console</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #262626;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            border: 1px solid #c89360;
+        }
+        h1 {
+            color: #F4B400;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #ccc;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: #fff;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #F4B400;
+            border: none;
+            border-radius: 6px;
+            color: #1a1a1a;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background-color: #dca000;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            background: #1a1a1a;
+            border: 1px solid #444;
+            display: none;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐝 Xobeez - Créer une Mission (MVP Test)</h1>
+        <form id="mission-form">
+            <div class="form-group">
+                <label for="clientId">ID Client (Flower)</label>
+                <input type="text" id="clientId" value="flower_01" required>
+            </div>
+            <div class="form-group">
+                <label for="freelancerId">ID Freelance (Bee)</label>
+                <input type="text" id="freelancerId" value="bee_01" required>
+            </div>
+            <div class="form-group">
+                <label for="amount">Montant (en centimes EUR)</label>
+                <input type="number" id="amount" value="150000" required>
+            </div>
+            <div class="form-group">
+                <label for="currency">Devise</label>
+                <select id="currency">
+                    <option value="EUR">EUR</option>
+                    <option value="MGA">MGA</option>
+                    <option value="USD">USD</option>
+                </select>
+            </div>
+            <button type="submit">Générer le HoneyLink</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('mission-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            resultDiv.textContent = 'Création de la mission en cours...';
+
+            const payload = {
+                client_id: document.getElementById('clientId').value,
+                freelancer_id: document.getElementById('freelancerId').value,
+                amount: parseInt(document.getElementById('amount').value),
+                currency: document.getElementById('currency').value
+            };
+
+            try {
+                // CHANGED TO PORT 8082
+                const response = await fetch('http://localhost:8082/v1/missions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+                resultDiv.textContent = JSON.stringify(data, null, 2);
+            } catch (err) {
+                resultDiv.textContent = 'Erreur lors de la création de la mission: ' + err.message;
+            }
+        });
+    </script>
+</body>
+</html>
