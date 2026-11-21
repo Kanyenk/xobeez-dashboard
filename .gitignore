@@ -14,3 +14,4 @@ __pycache__/
 xobeez/ledger/*.db
 xobeez/dist/profiles/
 xobeez/dist/profiles-disabled/
+xobeez/
