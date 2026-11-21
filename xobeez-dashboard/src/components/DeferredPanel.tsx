@@ -7,10 +7,10 @@ interface AgentStatus {
   total_agents: number;
 }
 
-export default function DeferredPanel({ agents }: { agents: AgentStatus }) {
+export default function DeferredPanel({ agents }: { agents: AgentStatus | null }) {
   const [showAll, setShowAll] = useState(false);
 
-  const deferredToShow = showAll ? agents.deferred_agents : agents.deferred_agents.slice(0, 5);
+  const deferredToShow = agents ? (showAll ? agents.deferred_agents : agents.deferred_agents.slice(0, 5)) : [];
 
   return (
     <div className="bg-gray-800 rounded-lg p-6 shadow-lg">
@@ -35,9 +35,9 @@ export default function DeferredPanel({ agents }: { agents: AgentStatus }) {
         ))}
       </div>
 
-      {agents.deferred_agents.length > 5 && !showAll && (
+      {agents && agents.deferred_agents.length > 5 && !showAll && (
         <p className="text-sm text-gray-400 mt-4">
-          {agents.deferred_agents.length - 5} more agents hidden
+          {agents!.deferred_agents.length - 5} more agents hidden
         </p>
       )}
     </div>

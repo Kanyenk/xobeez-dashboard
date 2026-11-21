@@ -7,7 +7,7 @@ interface AgentStatus {
   total_agents: number;
 }
 
-export default function AgentsPanel({ agents }: { agents: AgentStatus }) {
+export default function AgentsPanel({ agents }: { agents: AgentStatus | null }) {
   const [activeOnly, setActiveOnly] = useState(false);
 
   return (
@@ -31,7 +31,7 @@ export default function AgentsPanel({ agents }: { agents: AgentStatus }) {
       </div>
 
       <div className="space-y-2">
-        {agents.active_agents.map((agent, idx) => (
+        {agents ? agents.active_agents.map((agent, idx) => (
           <div key={idx} className="bg-gray-700 rounded p-3">
             <div className="flex justify-between">
               <span className="font-bold">{agent.profile}</span>
@@ -41,7 +41,7 @@ export default function AgentsPanel({ agents }: { agents: AgentStatus }) {
               {agent.department} • Wave {agent.wave} • {agent.role}
             </div>
           </div>
-        ))}
+        ))} : []}
       </div>
     </div>
   );

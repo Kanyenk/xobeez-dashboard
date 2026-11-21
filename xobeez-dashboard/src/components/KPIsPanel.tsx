@@ -12,7 +12,16 @@ interface KPI {
   agents_differes: number;
 }
 
-export default function KPIsPanel({ kpis }: { kpis: KPI }) {
+export default function KPIsPanel({ kpis }: { kpis: KPI | null }) {
+  if (!kpis) {
+    return (
+      <div className="bg-gray-800 rounded-lg p-6 shadow-lg">
+        <h2 className="text-2xl font-bold mb-4">KPIs</h2>
+        <div className="text-gray-400">Loading...</div>
+      </div>
+    );
+  }
+
   const data = [
     { name: 'Total', value: kpis.profiles_total },
     { name: 'Deployed', value: kpis.xo_deployed },

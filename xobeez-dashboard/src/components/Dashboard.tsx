@@ -31,7 +31,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     // Load agents status
-    fetch('http://localhost:8003/agents/status', {
+    const loadAgents = fetch('http://localhost:8095/agents/status', {
       headers: {
         'X-API-Key': 'secret-key-123456'
       }
@@ -39,12 +39,11 @@ export default function Dashboard() {
       .then(res => res.json())
       .then(data => {
         setAgents(data);
-        setLoading(false);
       })
       .catch(err => console.error('Error loading agents:', err));
 
     // Load KPIs
-    fetch('http://localhost:8003/kpis', {
+    const loadKPIs = fetch('http://localhost:8095/kpis', {
       headers: {
         'X-API-Key': 'secret-key-123456'
       }
@@ -52,9 +51,10 @@ export default function Dashboard() {
       .then(res => res.json())
       .then(data => {
         setKPIs(data.kpis);
-        setLoading(false);
       })
       .catch(err => console.error('Error loading KPIs:', err));
+
+    Promise.all([loadAgents, loadKPIs]).finally(() => setLoading(false));
   }, []);
 
   if (loading) {
